@@ -2,7 +2,6 @@ import os
 import sys
 from dataclasses import dataclass
 
-# ✅ Classification models
 from sklearn.ensemble import (
     AdaBoostClassifier,
     GradientBoostingClassifier,
@@ -12,7 +11,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from xgboost import XGBClassifier
 
-# ✅ Correct metric
+
 from sklearn.metrics import accuracy_score
 
 from src.exception import CustomException
@@ -40,7 +39,6 @@ class ModelTrainer:
                 test_array[:, -1]
             )
 
-            # ✅ Classification models
             models = {
                 "Random Forest": RandomForestClassifier(),
                 "Decision Tree": DecisionTreeClassifier(),
@@ -60,10 +58,8 @@ class ModelTrainer:
                 models=models,
             )
 
-            # 🔍 Debug
             print("Model Report:", model_report)
 
-            # ✅ Best model
             best_model_score = max(model_report.values())
 
             best_model_name = list(model_report.keys())[
@@ -72,22 +68,18 @@ class ModelTrainer:
 
             best_model = models[best_model_name]
 
-            # ✅ Train best model
             best_model.fit(X_train, y_train)
 
-            # ⚠️ Don't crash, just warn
             if best_model_score < 0.6:
                 print("Warning: Low accuracy, but using best available model")
 
             logging.info(f"Best model found: {best_model_name}")
 
-            # ✅ Save model
             save_object(
                 file_path=self.model_trainer_config.trained_model_file_path,
                 obj=best_model
             )
 
-            # ✅ Prediction
             predicted = best_model.predict(X_test)
 
             accuracy = accuracy_score(y_test, predicted)

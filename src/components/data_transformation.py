@@ -25,7 +25,6 @@ class DataTransformation:
 
     def get_data_transformer_object(self):
         try:
-            # ✅ Removed Student_ID (important improvement)
             numerical_cols = [
                 'Age', 'Family_Income', 'Study_Hours_per_Day',
                 'Attendance_Rate', 'Assignment_Delay_Days',
@@ -39,19 +38,16 @@ class DataTransformation:
                 'Parental_Education'
             ]
 
-            # ✅ Numerical Pipeline
             num_pipeline = Pipeline(steps=[
                 ('imputer', SimpleImputer(strategy='median')),
                 ('scaler', StandardScaler())
             ])
 
-            # ✅ Categorical Pipeline (FIXED ❗ removed scaler)
             cat_pipeline = Pipeline(steps=[
                 ('imputer', SimpleImputer(strategy='most_frequent')),
                 ('onehot', OneHotEncoder(handle_unknown='ignore'))
             ])
 
-            # ✅ Column Transformer
             preprocessor = ColumnTransformer(
                 transformers=[
                     ('num', num_pipeline, numerical_cols),
@@ -75,7 +71,6 @@ class DataTransformation:
 
             target_column_name = "Dropout"
 
-            # ✅ Fixed drop (no axis error)
             input_feature_train_df = train_df.drop(columns=[target_column_name])
             target_feature_train_df = train_df[target_column_name]
 
@@ -87,7 +82,6 @@ class DataTransformation:
             input_feature_train_arr = preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)
 
-            # ✅ Combine features + target
             train_arr = np.c_[input_feature_train_arr, np.array(target_feature_train_df)]
             test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
 
