@@ -19,10 +19,10 @@ class PredictPipeline:
             preprocessor = load_object(file_path=preprocessor_path)
             print("After Loading")
 
-            # ✅ Apply preprocessing
+        
             data_scaled = preprocessor.transform(features)
 
-            # ✅ Predict
+           
             preds = model.predict(data_scaled)
 
             return preds
@@ -31,7 +31,7 @@ class PredictPipeline:
             raise CustomException(e, sys)
 
 
-# 🔥 UPDATED CustomData CLASS
+
 class CustomData:
     def __init__(
         self,
@@ -54,7 +54,7 @@ class CustomData:
         Parental_Education
     ):
 
-        # Numerical
+      
         self.Age = Age
         self.Family_Income = Family_Income
         self.Study_Hours_per_Day = Study_Hours_per_Day
@@ -66,7 +66,7 @@ class CustomData:
         self.Semester_GPA = Semester_GPA
         self.CGPA = CGPA
 
-        # Categorical
+       
         self.Gender = Gender
         self.Internet_Access = Internet_Access
         self.Part_Time_Job = Part_Time_Job
